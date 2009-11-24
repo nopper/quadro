@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QLayersDialog</class>
+ <widget class="QDialog" name="QLayersDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>240</width>
+    <height>320</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0" rowspan="6">
+    <widget class="QListView" name="mList"/>
+   </item>
+   <item row="0" column="1">
+    <widget class="QPushButton" name="mUpBtn">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/icons/go-up.png</normaloff>:/icons/go-up.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QPushButton" name="mDownBtn">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/icons/go-down.png</normaloff>:/icons/go-down.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1" rowspan="2">
+    <widget class="QSlider" name="mOpacitySlider">
+     <property name="maximum">
+      <number>100</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="Thumb" name="mFrame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QPushButton" name="mNewBtn">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/icons/new.png</normaloff>:/icons/new.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QPushButton" name="mDeleteBtn">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QPushButton" name="mActiveBtn">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/icons/active.png</normaloff>:/icons/active.png</iconset>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Thumb</class>
+   <extends>QFrame</extends>
+   <header>qlayersdialog.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>buttonBox</tabstop>
+  <tabstop>mUpBtn</tabstop>
+  <tabstop>mDownBtn</tabstop>
+  <tabstop>mNewBtn</tabstop>
+  <tabstop>mDeleteBtn</tabstop>
+  <tabstop>mList</tabstop>
+  <tabstop>mOpacitySlider</tabstop>
+ </tabstops>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>QLayersDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>186</x>
+     <y>310</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>QLayersDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>186</x>
+     <y>310</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mUpBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>QLayersDialog</receiver>
+   <slot>moveUp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>219</x>
+     <y>28</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>243</x>
+     <y>64</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mOpacitySlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>QLayersDialog</receiver>
+   <slot>setAlpha(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>209</x>
+     <y>272</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>238</x>
+     <y>157</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mDownBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>QLayersDialog</receiver>
+   <slot>moveDown()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>206</x>
+     <y>47</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>236</x>
+     <y>98</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mNewBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>QLayersDialog</receiver>
+   <slot>newLayer()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>202</x>
+     <y>99</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>225</x>
+     <y>196</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mDeleteBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>QLayersDialog</receiver>
+   <slot>deleteLayer()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>212</x>
+     <y>127</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>224</x>
+     <y>137</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mActiveBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>QLayersDialog</receiver>
+   <slot>setActiveLayer()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>209</x>
+     <y>165</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>235</x>
+     <y>225</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>moveUp()</slot>
+  <slot>moveDown()</slot>
+  <slot>setAlpha(int)</slot>
+  <slot>newLayer()</slot>
+  <slot>deleteLayer()</slot>
+  <slot>setActiveLayer()</slot>
+ </slots>
+</ui>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QToolDialogClass</class>
+ <widget class="QDialog" name="QToolDialogClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>287</width>
+    <height>336</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>QToolDialog</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="1" colspan="2">
+    <widget class="QRadioButton" name="brush1Btn">
+     <property name="text">
+      <string>Brush 1</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QRadioButton" name="brush2Btn">
+     <property name="text">
+      <string>Brush 2</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <widget class="QRadioButton" name="eraserBtn">
+     <property name="text">
+      <string>Eraser</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="6">
+    <layout class="QVBoxLayout" name="mLayout"/>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Size</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2" colspan="3">
+    <widget class="QSlider" name="mSizeSlider">
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>50</number>
+     </property>
+     <property name="singleStep">
+      <number>1</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="2">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Transparency</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2" colspan="3">
+    <widget class="QSlider" name="mAlphaSlider">
+     <property name="maximum">
+      <number>255</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="2" colspan="3">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>QToolDialogClass</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>157</x>
+     <y>312</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>45</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>QToolDialogClass</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>233</x>
+     <y>313</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>240</x>
+     <y>330</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mSizeSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>QToolDialogClass</receiver>
+   <slot>toolSizeChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>251</x>
+     <y>268</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>278</x>
+     <y>230</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mAlphaSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>QToolDialogClass</receiver>
+   <slot>toolAlphaChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>184</x>
+     <y>285</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>284</x>
+     <y>277</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>brush1Btn</sender>
+   <signal>clicked()</signal>
+   <receiver>QToolDialogClass</receiver>
+   <slot>toolSelect()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>149</x>
+     <y>22</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>316</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eraserBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>QToolDialogClass</receiver>
+   <slot>toolSelect()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>215</x>
+     <y>17</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>316</x>
+     <y>68</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>toolSizeChanged(int)</slot>
+  <slot>toolAlphaChanged(int)</slot>
+  <slot>toolSelect()</slot>
+ </slots>
+</ui>
