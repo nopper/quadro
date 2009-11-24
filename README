@@ -1,0 +1,27 @@
+What's Quadro?
+==============
+
+It's a small Qt[1] program written to emulate the behaviour of Brushes app [2]
+for iPhone. It's a simple paint program, with layers, brushes and undo system
+and my first try to program using Qt toolkit. If you need a real paint program
+for your mobile get an iPhone and install brushes app ;)
+
+How to install quadro
+=====================
+
+You need to have Qt installed in your phone. So you need:
+
+ - STDCPP_s60_1_6_SS.sis
+ - pips_s60_1_6_SS.sis
+ - openc_ssl_s60_1_6_SS.sis
+ - qt.sis
+
+After having satisfied all dependencies you could install the quadro sis file.
+For documentation please refer to [3].
+
+References
+==========
+
+ [1] http://trolltech.com
+ [2] http://brushesapp.com
+ [3] http://pepper.troll.no/s60prereleases/
