@@ -66,6 +66,7 @@ void ClickBar::setRgbStyle(bool s)
 
 void ClickBar::paintEvent(QPaintEvent *event)
 {
+	Q_UNUSED(event);
 	QPainter painter(this);
 	QRect r = contentsRect();
 	//painter.setBrush(QApplication::palette().window().color());

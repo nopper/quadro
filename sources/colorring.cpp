@@ -167,6 +167,7 @@ void ColorRing::setStyle(int i)
 
 void ColorRing::paintEvent(QPaintEvent *event)
 {
+	Q_UNUSED(event);
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing, true);
 	QRect r = contentsRect();

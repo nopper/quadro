@@ -89,6 +89,7 @@ void Quadro::save()
 
 void Quadro::scrolled(int value)
 {
+    Q_UNUSED(value);
     mQuadroArea->update();
     mQuadroArea->updateSlider();
 }

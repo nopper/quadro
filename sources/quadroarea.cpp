@@ -123,7 +123,7 @@ void QuadroArea::createUi()
     mTool = ERASER;
     mBrushWidth = 20;
     mColor = Qt::blue;
-    mZoomFactor = 1.0;
+    mZoomFactor = 0;
 
     mCurUndo = 0;
     mCurStroke = NULL;
@@ -143,6 +143,8 @@ void QuadroArea::createUi()
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, SIGNAL(customContextMenuRequested(QPoint)),
             this, SLOT(switchPickMode(QPoint)));
+
+    setZoomFactor(1.0);
 }
 
 void QuadroArea::drawPath(const QPainterPath &path)
@@ -221,11 +223,11 @@ void QuadroArea::mouseReleaseEvent(QMouseEvent *event)
             while (i-- > 0)
                mUndoes.removeLast();
         }
-        else if (mUndoes.size() > N_UNDO_LEVEL)
+        else if (mUndoes.size() >= N_UNDO_LEVEL)
         {
             QuadroStroke *stroke = mUndoes.first();
 
-            applyStroke(mImage, stroke);
+            applyStroke(mOrigImage, stroke);
             mUndoes.removeFirst();
 
             delete stroke;
@@ -308,7 +310,6 @@ bool QuadroArea::undo()
     mImage->fill(qRgba(255, 255, 255, 255));
 
     QPainter painter(mImage);
-    painter.setRenderHint(QPainter::Antialiasing, true);
     painter.drawImage(QPoint(0, 0), *mOrigImage);
 
     for (int i = 1; i < mCurUndo; i++)
@@ -327,8 +328,8 @@ bool QuadroArea::redo()
     if (mCurUndo == N_UNDO_LEVEL || mCurUndo == mUndoes.size())
         return false;
 
+    applyStroke(mImage, mUndoes.at(mCurUndo));
     mCurUndo = qMin(mCurUndo + 1, N_UNDO_LEVEL);
-    applyStroke(mImage, mUndoes.at(mCurUndo - 1));
 
     update();
 
@@ -374,10 +375,15 @@ void QuadroArea::resizeImage(QImage *image, const QSize& size)
 
 void QuadroArea::modifyImage(QImage *image, int x, int y)
 {
+    QRgb *rawImage = (QRgb *)image->scanLine(0),
+         *rawBrush = (QRgb *)mBrush.scanLine(0);
+
     QRgb value, pbrush;
     int r, g, b;
     int nr, ng, nb, av;
     double delta;
+
+    int width = image->width();
 
     if (x >= 0 && x < image->width() && y >= 0 && y < image->height())
     {
@@ -401,7 +407,7 @@ void QuadroArea::modifyImage(QImage *image, int x, int y)
         for (int j = c[0], cy = cursorYStart; j < c[1]; j++, cy++)
             for (int i = a[0], cx = cursorXStart; i < a[1]; i++, cx++)
             {
-                pbrush = mBrush.pixel(cx, cy);
+                pbrush = rawBrush[cy * mBrushWidth + cx];
 
                 if (mTool != ERASER && (qRed(pbrush)   < THRESHOLD || \
                                         qGreen(pbrush) < THRESHOLD || \
@@ -414,7 +420,7 @@ void QuadroArea::modifyImage(QImage *image, int x, int y)
                 av = (int)(mColor.alpha() * delta + qAlpha(value) * (1 - delta));
 
                 if (mTool == ERASER)
-                    image->setPixel(i, j, qRgba(255, 255, 255, av));
+                    rawImage[j * width + i] = qRgba(255, 255, 255, av);
                 else
                 {
                     nr = (int)(r * delta + qRed(value)   * (1 - delta));
@@ -427,7 +433,7 @@ void QuadroArea::modifyImage(QImage *image, int x, int y)
                     if (av <= 0 + THRESHOLD)
                         continue;
 
-                    image->setPixel(i, j, qRgba(nr, ng, nb, av));
+                    rawImage[j * width + i] = qRgba(nr, ng, nb, av);
                 }
             }
     }
@@ -603,6 +609,7 @@ void QuadroArea::setTool(ToolEnum tool, int width, const QColor &color)
 void QuadroArea::unsetTool()
 {
     setTool(mPrevTool, false);
+    updateSlider();
 }
 
 void QuadroArea::setBrushWidth(int twidth)
@@ -629,10 +636,21 @@ void QuadroArea::setZoomFactor(float f)
 
     setMinimumSize(w, h);
 
-    QWidget *p = dynamic_cast<QWidget *> (parent());
+    QScrollArea *p = dynamic_cast<QScrollArea *> (parent());
 
     if (p)
-        resize(p->width(), p->height());
+    {
+        QScrollBar *bar = p->horizontalScrollBar();
+        bar->setValue(int(mZoomFactor * bar->value() + \
+                      ((mZoomFactor - 1) * bar->pageStep() / 2)));
 
+        bar = p->verticalScrollBar();
+        bar->setValue(int(mZoomFactor * bar->value() + \
+                      ((mZoomFactor - 1) * bar->pageStep() / 2)));
+
+        resize(p->width(), p->height());
+    }
+
+    updateSlider();
     repaint();
 }
