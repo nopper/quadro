@@ -340,6 +340,10 @@ bool QuadroArea::redo()
 
 void QuadroArea::applyStroke(QImage *image, const QuadroStroke *stroke)
 {
+    QPoint prevPoint = mLastPoint;
+    QColor prevColor = mColor;
+    int prevWidth = mBrushWidth;
+
     setTool(stroke->mTool, false);
     setBrushColor(stroke->mColor);
     setBrushWidth(stroke->mWidth);
@@ -349,8 +353,8 @@ void QuadroArea::applyStroke(QImage *image, const QuadroStroke *stroke)
         drawLine(image, line.x1, line.y1, line.x2, line.y2);
 
     setTool(mTool, false);
-    setBrushColor(mColor);
-    setBrushWidth(mBrushWidth);
+    setBrushColor(prevColor);
+    setBrushWidth(prevWidth);
 }
 
 void QuadroArea::zoomSliderChanged(int value)
